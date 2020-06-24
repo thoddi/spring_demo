@@ -1,18 +1,25 @@
 package personal.thorvardur.spring_demo.services;
 
-import org.springframework.security.core.userdetails.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import personal.thorvardur.spring_demo.models.DemoUserDetails;
+import personal.thorvardur.spring_demo.models.User;
+import personal.thorvardur.spring_demo.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class DemoUserDetailsService implements UserDetailsService
 {
+    @Autowired
+    UserRepository userRepository;
+
     /**
      * Returns a user with given userName.
      * @param userName Username of the user.
@@ -21,9 +28,11 @@ public class DemoUserDetailsService implements UserDetailsService
      */
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        Optional<User> user = userRepository.findByUserName(userName);
 
-        // Let's return a hard coded user for now.
-        return new User("admin", encoder.encode("admin"), new ArrayList<>());
+        // If no user is found an exception is thrown.
+        user.orElseThrow(() -> new UsernameNotFoundException("No user with name: " + userName));
+
+        return user.map(DemoUserDetails::new).get();
     }
 }
