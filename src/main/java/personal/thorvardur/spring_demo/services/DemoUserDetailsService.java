@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import personal.thorvardur.spring_demo.models.DemoUserDetails;
 import personal.thorvardur.spring_demo.models.User;
 import personal.thorvardur.spring_demo.repositories.UserRepository;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -31,7 +28,7 @@ public class DemoUserDetailsService implements UserDetailsService
         Optional<User> user = userRepository.findByUserName(userName);
 
         // If no user is found an exception is thrown.
-        user.orElseThrow(() -> new UsernameNotFoundException("No user with name: " + userName));
+        user.orElseThrow(() -> new UsernameNotFoundException("No user found with name: " + userName));
 
         return user.map(DemoUserDetails::new).get();
     }

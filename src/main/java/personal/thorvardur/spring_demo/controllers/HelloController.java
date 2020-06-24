@@ -1,4 +1,4 @@
-package personal.thorvardur.spring_demo;
+package personal.thorvardur.spring_demo.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
