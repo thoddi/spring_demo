@@ -23,4 +23,4 @@ On startup, a single user is seeded to the in-memory database. The username and 
 ### Extra libraries being used in the project
 
 * H2 - used to create an in-memory database.
- 
+* springfox-swagger2 & springfox-swagger-ui - used for documentation and testing. 
