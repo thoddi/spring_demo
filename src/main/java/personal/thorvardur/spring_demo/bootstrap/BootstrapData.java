@@ -25,11 +25,18 @@ public class BootstrapData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
-        System.out.println("Loading user data");
+        System.out.println("Loading users' data");
+
+        User admin = new User();
+        admin.setUserName("admin");
+        admin.setPassword(encoder.encode("admin"));
+        admin.setRoles("ROLE_ADMIN,ROLE_USER");
+        userRepository.save(admin);
 
         User user = new User();
-        user.setUserName("admin");
-        user.setPassword(encoder.encode("admin"));
+        user.setUserName("user");
+        user.setPassword(encoder.encode("user"));
+        user.setRoles("ROLE_USER");
         userRepository.save(user);
 
         System.out.println("Loaded users: " + userRepository.count());

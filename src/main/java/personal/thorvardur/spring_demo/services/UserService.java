@@ -18,4 +18,11 @@ public interface UserService {
      * @return A list of user objects.
      */
     List<User> findAll();
+
+    /**
+     * Saves a new user to the DB.
+     * @param user User information.
+     * @return A copy of the saved user.
+     */
+    User save(User user);
 }
