@@ -68,8 +68,7 @@ public class UserServiceImpl implements UserService {
     public User update(int id, EditUserDTO user) throws Exception {
             User oldUser = findById(id);
 
-            oldUser.setUserName(user.getUserName());
-            oldUser.setRoles(user.getRoles());
+            user.applyTo(oldUser);
 
             return userRepository.save(oldUser);
     }
