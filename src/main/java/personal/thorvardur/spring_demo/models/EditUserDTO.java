@@ -38,4 +38,9 @@ public class EditUserDTO {
     {
         this.roles = roles;
     }
+
+    public void applyTo(User user){
+        user.setUserName(userName);
+        user.setRoles(roles);
+    }
 }
