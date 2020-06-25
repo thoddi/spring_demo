@@ -1,5 +1,7 @@
 package personal.thorvardur.spring_demo.services;
 
+import personal.thorvardur.spring_demo.models.CreateUserDTO;
+import personal.thorvardur.spring_demo.models.EditUserDTO;
 import personal.thorvardur.spring_demo.models.User;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public interface UserService {
      * @param user User information.
      * @return A copy of the saved user.
      */
-    User insert(User user);
+    User insert(CreateUserDTO user);
 
     /**
      * Updates the information of a user.
@@ -33,7 +35,7 @@ public interface UserService {
      * @return A copy of the updated user object.
      * @throws Exception Throws exception if no user is found.
      */
-    User update(int id, User user) throws Exception;
+    User update(int id, EditUserDTO user) throws Exception;
 
     /**
      * Deletes a user.
