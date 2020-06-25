@@ -24,5 +24,22 @@ public interface UserService {
      * @param user User information.
      * @return A copy of the saved user.
      */
-    User save(User user);
+    User insert(User user);
+
+    /**
+     * Updates the information of a user.
+     * @param id The id of the user to update.
+     * @param user New user information.
+     * @return A copy of the updated user object.
+     * @throws Exception Throws exception if no user is found.
+     */
+    User update(int id, User user) throws Exception;
+
+    /**
+     * Deletes a user.
+     * @param id The id of the user to delete.
+     * @return returns a 'true' if successful.
+     * @throws Exception Throws exception if no user is found.
+     */
+    boolean delete(int id) throws Exception;
 }

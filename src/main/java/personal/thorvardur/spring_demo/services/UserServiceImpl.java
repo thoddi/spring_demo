@@ -13,9 +13,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+        encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     /**
@@ -49,11 +51,40 @@ public class UserServiceImpl implements UserService {
      * @return A copy of the saved user.
      */
     @Override
-    public User save(User user) {
+    public User insert(User user) {
         // Encode the given password.
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    /**
+     * Updates the information of a user.
+     * @param id The id of the user to update.
+     * @param user New user information.
+     * @return A copy of the updated user object.
+     * @throws Exception Throws exception if no user is found.
+     */
+    @Override
+    public User update(int id, User user) throws Exception {
+            User oldUser = findById(id);
+
+            oldUser.setUserName(user.getUserName());
+            oldUser.setRoles(user.getRoles());
+
+            return userRepository.save(oldUser);
+    }
+
+    /**
+     * Deletes a user.
+     * @param id The id of the user to delete.
+     * @return returns a 'true' if successful.
+     * @throws Exception Throws exception if no user is found.
+     */
+    @Override
+    public boolean delete(int id) throws Exception {
+        User user = findById(id);
+        userRepository.delete(user);
+        return true;
     }
 }

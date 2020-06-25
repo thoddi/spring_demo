@@ -49,11 +49,46 @@ public class UserController {
     /**
      * Saves a new user to the DB.
      * @param user User information.
-     * @return Http status code and a copy of the user.
+     * @return A copy of the user.
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User save(@RequestBody User user){
-        return userService.save(user);
+    public User insert(@RequestBody User user){
+        return userService.insert(user);
+    }
+
+    /**
+     * Updates the user with given id.
+     * @param id The id of the user.
+     * @param user The updated user information.
+     * @return A copy of the updated user object.
+     */
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public User update(@PathVariable int id, @RequestBody User user) {
+        try{
+            return userService.update(id, user);
+        }
+        // If we catch an exception, we shall return a 404 status code.
+        catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Deletes the user with the given id.
+     * @param id The id of the user to delete.
+     * @return True, if the deletion is successful.
+     */
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean delete(@PathVariable int id){
+        try{
+            return userService.delete(id);
+        }
+        // If we catch an exception, we shall return a 404 status code.
+        catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 }
