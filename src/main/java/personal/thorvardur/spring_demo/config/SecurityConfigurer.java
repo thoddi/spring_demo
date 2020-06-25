@@ -1,4 +1,4 @@
-package personal.thorvardur.spring_demo;
+package personal.thorvardur.spring_demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
