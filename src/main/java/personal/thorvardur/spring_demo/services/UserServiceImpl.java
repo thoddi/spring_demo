@@ -3,6 +3,8 @@ package personal.thorvardur.spring_demo.services;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import personal.thorvardur.spring_demo.models.CreateUserDTO;
+import personal.thorvardur.spring_demo.models.EditUserDTO;
 import personal.thorvardur.spring_demo.models.User;
 import personal.thorvardur.spring_demo.repositories.UserRepository;
 
@@ -51,11 +53,8 @@ public class UserServiceImpl implements UserService {
      * @return A copy of the saved user.
      */
     @Override
-    public User insert(User user) {
-        // Encode the given password.
-        user.setPassword(encoder.encode(user.getPassword()));
-
-        return userRepository.save(user);
+    public User insert(CreateUserDTO user) {
+        return userRepository.save(user.toUserEntity());
     }
 
     /**
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService {
      * @throws Exception Throws exception if no user is found.
      */
     @Override
-    public User update(int id, User user) throws Exception {
+    public User update(int id, EditUserDTO user) throws Exception {
             User oldUser = findById(id);
 
             oldUser.setUserName(user.getUserName());

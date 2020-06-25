@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import personal.thorvardur.spring_demo.models.CreateUserDTO;
+import personal.thorvardur.spring_demo.models.EditUserDTO;
 import personal.thorvardur.spring_demo.models.User;
 import personal.thorvardur.spring_demo.services.UserService;
 
@@ -70,7 +72,7 @@ public class UserController {
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User insert(@RequestBody User user){
+    public User insert(@RequestBody CreateUserDTO user){
         return userService.insert(user);
     }
 
@@ -87,7 +89,7 @@ public class UserController {
     )
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User update(@PathVariable int id, @RequestBody User user) {
+    public User update(@PathVariable int id, @RequestBody EditUserDTO user) {
         try{
             return userService.update(id, user);
         }
